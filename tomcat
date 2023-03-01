@@ -1,0 +1,32 @@
+sudo apt-get install default-jdk
+
+wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.85/bin/apache-tomcat-8.5.85.tar.gz
+
+tar -xzf apache-tomcat-8.5.85.tar.gz
+
+sudo mv apache-tomcat-8.5.85 /opt/tomcat
+
+sudo useradd -r tomcat
+
+sudo chown -R tomcat: /opt/tomcat
+
+
+#Configure Manager Host: In order to use the Manager Host, you need to modify the conf/tomcat-users.xml file. Open the file and add the following lines:
+
+<role rolename="manager-gui"/>
+<role rolename="admin-gui"/>
+<user username="admin" password="123" roles="manager-gui,admin-gui"/>
+
+
+#Configure Manager App: Next, you need to modify the webapps/manager/META-INF/context.xml file. Open the file and comment out the following line:
+
+
+<!--<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+      allow="127\.0\.0\.1" />-->
+
+
+sudo /opt/tomcat/bin/startup.shz
+
+
+#Check On
+http://ip:8080/manager/html

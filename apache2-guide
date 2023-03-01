@@ -1,0 +1,58 @@
+
+
+Install Apache2: First, you need to install Apache2 web server on your Kali Linux system. You can do this by running the following command in the terminal:
+sudo apt-get update
+sudo apt-get install apache2
+
+Create a new directory: You need to create a new directory where your C program and related files will be stored. For example, you can create a directory named "myprogram" in the /var/www/html/ directory, which is the default directory for Apache2 web server files.
+sudo mkdir /var/www/html/myprogram
+
+Write and compile your C program: Write your C program and save it with a .c extension in the directory you just created. For example, you can create a file named "myprogram.c" in the /var/www/html/myprogram/ directory
+sudo nano /var/www/html/myprogram/myprogram.c
+
+Inside your C program file, include any necessary headers and write your C code. For example, here's a simple "Hello World" program:
+
+#include <stdio.h>
+
+int main() {
+    printf("Content-Type: text/html\n\n");
+    printf("<html><head><title>Hello World</title></head><body><h1>Hello World</h1></body></html>");
+    return 0;
+}
+
+Save the file, and then compile it using GCC. You can use the following command to compile the program:
+sudo gcc /var/www/html/myprogram/myprogram.c -o /var/www/html/myprogram/myprogram.cgi
+This will create an executable file named "myprogram.cgi" in the same directory.
+
+Set permissions: You need to set the appropriate permissions for your program and related files so that Apache2 can execute them. You can use the following command to do this:
+sudo chmod 755 /var/www/html/myprogram
+sudo chmod 755 /var/www/html/myprogram/myprogram.cgi
+
+Create an Apache2 configuration file: You need to create a configuration file for Apache2 that tells it how to handle requests for your program. You can use the following command to create a new file named "myprogram.conf" in the /etc/apache2/sites-available/ directory:
+sudo nano /etc/apache2/sites-available/myprogram.conf
+
+Inside the file, paste the following configuration:
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/myprogram
+
+    ScriptAlias /cgi-bin/ /var/www/html/myprogram/
+
+    <Directory "/var/www/html/myprogram">
+        Options +ExecCGI
+        AddHandler cgi-script .cgi
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/myprogram_error.log
+    CustomLog ${APACHE_LOG_DIR}/myprogram_access.log combined
+</VirtualHost>
+
+Save the file and exit the editor.
+
+Enable the configuration: You need to enable the configuration file you just created by creating a symbolic link in the /etc/apache2/sites-enabled/ directory. You can use the following command to do this:
+sudo ln -s /etc/apache2/sites-available/myprogram.conf /etc/apache2/sites-enabled/myprogram.conf
+
+Restart Apache2: Finally, you need to restart Apache2 to apply the changes.

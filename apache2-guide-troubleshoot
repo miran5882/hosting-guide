@@ -1,0 +1,55 @@
+If you are still seeing the default Apache2 page after completing the steps, it's possible that Apache2 is not configured to look for files in the correct directory or to execute CGI scripts.
+
+Here are a few things you can check to troubleshoot the issue:
+
+
+Check the Apache2 error logs: You can check the Apache2 error logs to see if there are any errors or warnings related to your configuration. The error logs are located in the /var/log/apache2/ directory. You can view the logs using the following command:
+sudo tail -f /var/log/apache2/error.log
+
+This will display the last few lines of the error log file. If there are any errors or warnings, they will be displayed here.
+
+Check the Apache2 configuration: Make sure that the myprogram.conf file is enabled and configured correctly. You can use the following command to check the configuration:
+sudo apache2ctl configtest
+
+This will test the Apache2 configuration and display any errors or warnings.
+
+Check the file permissions: Make sure that the myprogram directory and files have the correct permissions. You can use the following command to check the permissions:
+ls -l /var/www/html/myprogram/
+
+The directory and files should have read and execute permissions for everyone.
+
+Make sure the program is executable: Make sure that the myprogram.cgi file is executable. You can use the following command to check the permissions:
+ls -l /var/www/html/myprogram/myprogram.cgi
+
+The file should have execute permissions for everyone.
+
+Check the file paths: Make sure that the file paths in the myprogram.conf file are correct. Double-check the DocumentRoot and ScriptAlias directives to ensure that they point to the correct directories.
+
+After checking these things, you may need to restart Apache2 for the changes to take effect:
+sudo service apache2 restart
+
+If you are still having issues, you can try searching online forums or asking for help in technical communities to get more specific help.
+
+
+If you have followed all the steps and checked the potential issues I listed, but are still seeing the default Apache2 page instead of your C program, here are some additional things you can try:
+
+Check your C program for errors: Make sure your C program is free from syntax errors and logical errors. Try running your program on the command line to make sure it's working as expected.
+
+Check Apache2 configuration files: Double-check the Apache2 configuration files for any errors or typos. Make sure that the configuration files are located in the correct directory and that they are being loaded by Apache2.
+
+Check file permissions: Make sure that the files in your C program directory have the correct permissions. Make sure that Apache2 has permission to access the directory and execute the program.
+
+Disable default virtual host: Make sure that the default virtual host is disabled or replaced with your custom virtual host. You can disable the default virtual host by running the following command:
+
+sudo a2dissite 000-default.conf
+
+Then, restart Apache2 by running:
+Copy code
+sudo systemctl restart apache2
+
+Clear browser cache: Clear your browser cache and try accessing your C program again. Sometimes the browser cache can cause issues when testing.
+
+Try accessing from a different device: Try accessing your C program from a different device or network to see if the issue is specific to one device or network.
+
+Check firewall settings: Check your firewall settings to make sure that port 80 (HTTP) is open and that incoming traffic is allowed.
+ufw allow http
